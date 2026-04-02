@@ -310,8 +310,20 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function normalizeBaseUrl(raw) {
+  if (!raw) return "";
+  return raw.replace(/\/+$/, "");
+}
+
+function getDefaultBaseUrl() {
+  const { origin, pathname } = window.location;
+  const trimmedPath = pathname.replace(/\/(game|controller)\/?$/, "");
+  if (!trimmedPath) return origin;
+  return origin + trimmedPath.replace(/\/+$/, "");
+}
+
 function buildControllerUrl(host) {
-  const base = host || window.location.origin;
+  const base = normalizeBaseUrl(host) || getDefaultBaseUrl();
   return `${base}/controller?room=${roomId}`;
 }
 
@@ -341,7 +353,7 @@ function renderQr() {
 
 updateQrBtn.addEventListener("click", renderQr);
 
-hostInput.value = window.location.origin;
+hostInput.value = getDefaultBaseUrl();
 renderQr();
 resize();
 updateScore();
