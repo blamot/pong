@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pong | Host</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="game-body">
+    <div class="grid-bg"></div>
+    <main class="game-shell">
+      <section class="game-panel">
+        <header class="hud">
+          <div class="hud-title">NEON PONG</div>
+          <div class="hud-score" id="score">0 : 0</div>
+        </header>
+        <canvas id="game" width="960" height="540"></canvas>
+        <footer class="hud-footer">
+          <span id="status">WAITING FOR A PLAYER</span>
+          <span class="hint">Keyboard: W/S or ↑/↓</span>
+          <button id="audio-toggle" class="btn btn-small" type="button">Audio: Off</button>
+        </footer>
+      </section>
+      <aside class="side-panel">
+        <div class="panel-title">Connect Phone</div>
+        <div class="panel-card">
+          <div id="qr"></div>
+          <div class="panel-row">
+            <label for="host-input">Host URL</label>
+            <input id="host-input" type="text" placeholder="http://your-host:3000" />
+          </div>
+          <button id="update-qr" class="btn">Update QR</button>
+        </div>
+        <div class="panel-card">
+          <div class="panel-subtitle">Localtunnel</div>
+          <div class="panel-text">Run: <code>npx localtunnel --port 3000</code></div>
+          <div class="panel-text">Paste the localtunnel URL above to update the QR.</div>
+        </div>
+      </aside>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="/game.js" defer></script>
+  </body>
+</html>

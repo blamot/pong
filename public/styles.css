@@ -1,0 +1,296 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap");
+
+:root {
+  --bg: #f5f5f5;
+  --bg-deep: #e7e7e7;
+  --neon-pink: #ff6200;
+  --neon-blue: #004b8d;
+  --neon-green: #9b9b9b;
+  --text: #1f1f1f;
+  --muted: rgba(31, 31, 31, 0.7);
+  --panel: rgba(255, 255, 255, 0.9);
+  --stroke: rgba(31, 31, 31, 0.12);
+  --glow: 0 0 10px rgba(0, 75, 141, 0.2);
+  --font-display: "Orbitron", "Eurostile", "OCR A Std", "Avenir Next", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 55%, var(--bg-deep) 100%);
+  overflow: hidden;
+}
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 75, 141, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 75, 141, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.9), transparent 70%);
+  pointer-events: none;
+}
+
+.game-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  padding: 32px;
+  height: 100vh;
+}
+
+.game-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.hud-title {
+  font-size: 20px;
+  color: var(--neon-blue);
+  text-shadow: var(--glow);
+}
+
+.hud-score {
+  font-size: 28px;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px rgba(255, 98, 0, 0.3);
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 75, 141, 0.2);
+  background: rgba(245, 245, 245, 0.9);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.12), 0 0 14px rgba(0, 75, 141, 0.12);
+}
+
+.hud-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hud-footer #status {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-title {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--neon-green);
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(43, 255, 136, 0.6);
+}
+
+.panel-card {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+#qr {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-row {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 12px;
+  font-family: var(--font-display);
+}
+
+.btn {
+  background: linear-gradient(180deg, #ff8a3a, #ff6200);
+  color: #ffffff;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  padding: 14px 20px;
+  border-radius: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2), 0 12px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25), 0 8px 14px rgba(0, 0, 0, 0.12);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-small {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+
+.panel-subtitle {
+  font-size: 14px;
+  color: var(--neon-blue);
+  text-transform: uppercase;
+}
+
+.panel-text {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.controller-body {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.controller-shell {
+  width: min(420px, 100%);
+  height: min(780px, 90vh);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 18px;
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.controller-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controller-status {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.controller-pad {
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 16px;
+}
+
+.touchpad {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 75, 141, 0.25);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(231, 231, 231, 0.92));
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.12), 0 0 16px rgba(0, 75, 141, 0.12);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.touchpad::before {
+  content: "";
+  position: absolute;
+  inset: 12% 12%;
+  border: 1px dashed rgba(0, 75, 141, 0.2);
+  border-radius: 16px;
+}
+
+.touchpad-label {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--muted);
+}
+
+.touch-indicator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90px;
+  height: 90px;
+  margin-left: -45px;
+  margin-top: -45px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 75, 141, 0.2);
+  background: radial-gradient(circle, rgba(0, 75, 141, 0.2), rgba(0, 75, 141, 0));
+  box-shadow: 0 0 14px rgba(0, 75, 141, 0.25);
+  opacity: 0.7;
+  transition: transform 0.08s ease, opacity 0.2s ease;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.controller-footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.controller-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 960px) {
+  .game-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+  }
+}

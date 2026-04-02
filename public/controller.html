@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pong | Controller</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="controller-body">
+    <div class="grid-bg"></div>
+    <main class="controller-shell">
+      <header class="controller-header">
+        <div class="hud-title">CONTROLLER</div>
+        <div id="controller-status" class="controller-status">Not connected</div>
+      </header>
+      <section class="controller-pad">
+        <div id="touchpad" class="touchpad">
+          <div class="touchpad-label">TOUCHPAD</div>
+          <div id="touch-indicator" class="touch-indicator"></div>
+        </div>
+      </section>
+      <footer class="controller-footer">
+        <div class="controller-controls">
+          <button id="start-btn" class="btn btn-small" type="button">Start</button>
+          <button id="reset-btn" class="btn btn-small" type="button">Reset</button>
+        </div>
+        <div class="controller-controls">
+          <button id="motion-toggle" class="btn btn-small" type="button">Motion: Off</button>
+          <button id="motion-calibrate" class="btn btn-small is-hidden" type="button">Calibrate</button>
+        </div>
+        <div id="motion-status" class="controller-status">Motion control off</div>
+        <span>Drag up/down or use motion control</span>
+      </footer>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/controller.js" defer></script>
+  </body>
+</html>
