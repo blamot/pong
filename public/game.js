@@ -3,8 +3,7 @@ const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
 const statusEl = document.getElementById("status");
 const qrEl = document.getElementById("qr");
-const hostInput = document.getElementById("host-input");
-const updateQrBtn = document.getElementById("update-qr");
+const restartGameBtn = document.getElementById("restart-game");
 const audioToggleBtn = document.getElementById("audio-toggle");
 
 const socket = io({ path: `${getBasePath()}/socket.io` });
@@ -37,6 +36,7 @@ let audioContext;
 let ambientGain;
 let ambientOsc;
 let gameStarted = false;
+let noControllerTimer;
 
 const roomId = createRoomId();
 
@@ -51,8 +51,10 @@ socket.on("controller-status", ({ connected }) => {
   if (!connected) {
     statusEl.textContent = "WAITING FOR A PLAYER";
     gameStarted = false;
+    startNoControllerTimer();
   } else if (!gameStarted) {
     statusEl.textContent = "PRESS START";
+    clearNoControllerTimer();
   }
   if (!connected) phoneDirection = 0;
 });
@@ -64,6 +66,7 @@ socket.on("controller-input", ({ direction }) => {
     if (!gameStarted) {
       statusEl.textContent = "PRESS START";
     }
+    clearNoControllerTimer();
   }
 });
 
@@ -72,6 +75,7 @@ socket.on("controller-start", () => {
   gameStarted = true;
   statusEl.textContent = "GAME ON";
   resetPositions();
+  clearNoControllerTimer();
 });
 
 socket.on("controller-reset", () => {
@@ -332,9 +336,23 @@ function buildControllerUrl(host) {
   return `${base}/controller?room=${roomId}`;
 }
 
+function startNoControllerTimer() {
+  clearNoControllerTimer();
+  noControllerTimer = setTimeout(() => {
+    if (!controllerConnected) {
+      window.location.reload();
+    }
+  }, 120000);
+}
+
+function clearNoControllerTimer() {
+  if (!noControllerTimer) return;
+  clearTimeout(noControllerTimer);
+  noControllerTimer = null;
+}
+
 function renderQr() {
-  const hostValue = hostInput.value.trim();
-  const url = buildControllerUrl(hostValue);
+  const url = buildControllerUrl("");
   qrEl.innerHTML = "";
   QRCode.toCanvas(
     url,
@@ -356,12 +374,22 @@ function renderQr() {
   );
 }
 
-updateQrBtn.addEventListener("click", renderQr);
+restartGameBtn.addEventListener("click", () => {
+  gameStarted = false;
+  state.scoreLeft = 0;
+  state.scoreRight = 0;
+  updateScore();
+  resetPositions();
+  statusEl.textContent = controllerConnected ? "PRESS START" : "WAITING FOR A PLAYER";
+  if (!controllerConnected) {
+    startNoControllerTimer();
+  }
+});
 
-hostInput.value = getDefaultBaseUrl();
 renderQr();
 resize();
 updateScore();
+startNoControllerTimer();
 
 let lastTime = 0;
 function loop(time) {

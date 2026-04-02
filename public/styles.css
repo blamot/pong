@@ -193,6 +193,9 @@ input {
   display: grid;
   place-items: center;
   padding: 20px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .controller-shell {
@@ -233,6 +236,9 @@ input {
   box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.12), 0 0 16px rgba(0, 75, 141, 0.12);
   overflow: hidden;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .touchpad::before {
