@@ -16,7 +16,7 @@ app.get("/game", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.redirect("/game");
+  res.redirect("game");
 });
 
 app.get("/controller", (req, res) => {
