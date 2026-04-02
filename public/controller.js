@@ -11,7 +11,7 @@ const params = new URLSearchParams(window.location.search);
 const rawRoom = params.get("room") || "";
 const roomId = rawRoom.replace(/[^a-zA-Z0-9]/g, "").slice(0, 8).toUpperCase();
 
-const socket = io();
+const socket = io({ path: `${getBasePath()}/socket.io` });
 
 let currentDirection = 0;
 let pointerActive = false;
@@ -39,6 +39,11 @@ function setMotionStatus(text) {
 function setCalibrateVisible(visible) {
   if (!motionCalibrateBtn) return;
   motionCalibrateBtn.classList.toggle("is-hidden", !visible);
+}
+
+function getBasePath() {
+  const { pathname } = window.location;
+  return pathname.replace(/\/(game|controller)\/?$/, "").replace(/\/+$/, "");
 }
 
 if (!roomId) {

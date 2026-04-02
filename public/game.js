@@ -7,7 +7,7 @@ const hostInput = document.getElementById("host-input");
 const updateQrBtn = document.getElementById("update-qr");
 const audioToggleBtn = document.getElementById("audio-toggle");
 
-const socket = io();
+const socket = io({ path: `${getBasePath()}/socket.io` });
 
 const state = {
   width: 960,
@@ -320,6 +320,11 @@ function getDefaultBaseUrl() {
   const trimmedPath = pathname.replace(/\/(game|controller)\/?$/, "");
   if (!trimmedPath) return origin;
   return origin + trimmedPath.replace(/\/+$/, "");
+}
+
+function getBasePath() {
+  const { pathname } = window.location;
+  return pathname.replace(/\/(game|controller)\/?$/, "").replace(/\/+$/, "");
 }
 
 function buildControllerUrl(host) {
